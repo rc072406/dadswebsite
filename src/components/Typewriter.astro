@@ -10,7 +10,7 @@ const { staticText, words } = Astro.props;
 <div class="typewriter-container">
   <span class="static">{staticText}</span>
   <span id="dynamic" class="dynamic" data-words={JSON.stringify(words)}></span>
-  <span class="cursor">_</span>
+  <span class="cursor">.</span>
 </div>
 
 <style>
