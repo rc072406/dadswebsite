@@ -1,19 +1,55 @@
+
+
 :root {
+ 
   --black: #000000;
   --white: #ffffff;
-  font-family: Inter, sans-serif;
+  
+  
+  font-family: 'Inter', sans-serif;
   font-feature-settings: 'liga' 1, 'calt' 1; 
 }
+
+
 @supports (font-variation-settings: normal) {
-  :root { font-family: InterVariable, sans-serif; }
+  :root { 
+    font-family: 'InterVariable', sans-serif; 
+  }
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    
+    --black: #ffffff;
+    --white: #000000;
+  }
 }
 
 body {
   background-color: var(--white);
   color: var(--black);
-  font-family: 'Inter', -apple-system, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   line-height: 1.5;
+
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+::selection {
+  background-color: var(--black);
+  color: var(--white);
 }
