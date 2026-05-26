@@ -1,0 +1,77 @@
+---
+interface Props {
+  staticText: string;
+  words: string[];
+}
+
+const { staticText, words } = Astro.props;
+---
+
+<div class="typewriter-container">
+  <span class="static">{staticText}</span>
+  <span id="dynamic" class="dynamic" data-words={JSON.stringify(words)}></span>
+  <span class="cursor">_</span>
+</div>
+
+<style>
+  .typewriter-container {
+    font-size: clamp(2rem, 8vw, 6rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+
+  .static {
+    font-weight: 400; 
+    display: block; 
+  }
+
+  .dynamic {
+    font-weight: 800; 
+    display: inline-block;
+  }
+
+  .cursor {
+    font-weight: 200;
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+</style>
+
+<script>
+  
+  const typeEffect = async (el: HTMLElement, words: string[]) => {
+    let wordIndex = 0;
+
+    while (true) {
+      let currentWord = words[wordIndex];
+      
+     
+      for (let i = 0; i <= currentWord.length; i++) {
+        el.textContent = currentWord.substring(0, i);
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+
+    
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+  
+      for (let i = currentWord.length; i >= 0; i--) {
+        el.textContent = currentWord.substring(0, i);
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
+
+      wordIndex = (wordIndex + 1) % words.length;
+    }
+  };
+
+  
+  const dynamicSpan = document.getElementById('dynamic');
+  if (dynamicSpan) {
+    const wordsArray = JSON.parse(dynamicSpan.getAttribute('data-words') || '[]');
+    typeEffect(dynamicSpan, wordsArray);
+  }
+</script>
